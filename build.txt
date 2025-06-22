@@ -1,0 +1,7 @@
+/poker-engine
+  ├─ game/
+  │   ├─ deck.ts            ← Shuffling, dealing
+  │   ├─ handEvaluator.ts   ← Poker hand ranking
+  │   ├─ table.ts           ← Manages pot, turns, state
+  │   └─ player.ts          ← Player actions
+  └─ server.ts              ← Socket.io game server
