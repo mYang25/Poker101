@@ -2,32 +2,47 @@
 // SUITS = ['hearts', 'diamonds', 'clubs', 'spades']
 // RANKS = ['2', '3', ..., '10', 'J', 'Q', 'K', 'A']
 const suits = ["hearts", "diamonds", "clubs", "spades"] as const;
-const ranks = ["2", "3", "4", "5", "6", "7", "8", "9", "10", "J", "Q", "K", "A"] as const;
+export enum ranks {
+    low_ace = 0,
+    two,
+    three,
+    four,
+    five,
+    six,
+    seven,
+    eight,
+    nine,
+    ten,
+    jack,
+    queen,
+    king,
+    ace
+}
 
-// // Card object
-// Card:
+// // card object
+// card:
 //   rank: string
 //   suit: string
 type Suit = typeof suits[number];
-type Rank = typeof ranks[number];
+type Rank = ranks;
 
-type Card = {
+export type card = {
     suit: Suit;
     rank: Rank;
 }
 
-// // Deck class
-// class Deck:
-//   cards: list of Card
-class Deck {
-    private cards: Card[] = [];
+// // deck class
+// class deck:
+//   cards: list of card
+class deck {
+    private cards: card[] = [];
 
 //   // Constructor
 //   init():
 //     cards = []
 //     for each suit in SUITS:
 //       for each rank in RANKS:
-//         cards.append(new Card(rank, suit))
+//         cards.append(new card(rank, suit))
     constructor() {
         this.init();
     }
@@ -35,7 +50,8 @@ class Deck {
     private init(): void {
         this.cards = [];
         for (const suit of suits) {
-            for (const rank of ranks) {
+            for (const key in ranks) {
+                const rank = ranks[key as keyof typeof ranks]
                 this.cards.push({rank, suit});
             }
         }
@@ -56,11 +72,11 @@ class Deck {
 //   // Deal one card
 //   dealOne():
 //     if cards is empty:
-//       throw error("Deck is empty")
+//       throw error("deck is empty")
 //     return cards.pop()
-    dealOne(): Card {
+    dealOne(): card {
         if (this.cards.length === 0) {
-            throw new Error("Deck is empty")
+            throw new Error("deck is empty")
         }
         return this.cards.pop()!;
     }
@@ -70,11 +86,11 @@ class Deck {
 //     if n > length(cards):
 //       throw error("Not enough cards")
 //     return [cards.pop() for _ in range(n)]
-    dealMany(n: number): Card[] {
+    dealMany(n: number): card[] {
         if (n > this.cards.length) {
             throw new Error("Not enough cards")
         }
-        const dealt: Card[] = [];
+        const dealt: card[] = [];
         for (let i = 0; i < n; i++) {
             dealt.push(this.dealOne());
         }
